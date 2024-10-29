@@ -19,19 +19,28 @@ function shuffleArray(array: any[]) {
     }
 }
 
-onMounted(() => {
-    const files = import.meta.glob('/public/slideshow/*.*');
+onMounted(async () => {
+    try {
+        const response = await fetch('/static-assets/slideshow/');
+        const text = await response.text();
 
-    slides.value = Object.keys(files).map(file => {
-        const fileType = file.endsWith('.mp4') ? 'video' : 'image';
-        const url = new URL(file, import.meta.url).href;
-        return {
-            src: url,
-            type: fileType
-        };
-    });
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        const links = doc.querySelectorAll('a');
+
+        slides.value = Array.from(links)
+            .map(link => link.href)
+            .filter(href => href.match(/\.(png|jpe?g|gif|webp|mp4)$/))
+            .map(href => ({
+                src: href.replace(/^(https?:\/\/[^\/]+)\//, '$1/static-assets/slideshow/'),
+                type: href.endsWith('.mp4') ? 'video' : 'image'
+            }));
+    } catch (error) {
+        console.error('Error loading images:', error);
+    }
 
     shuffleArray(slides.value);
+    console.log(slides.value);
 
     setInterval(() => {
         if (skipCycle.value) {
@@ -46,7 +55,6 @@ onMounted(() => {
 
 watch(activeSlide, () => {
     if (slides.value[activeSlide.value].type === "video") {
-        console.log('video');
         cycle.value = false;
         nextTick(() => {
             video.value = document.querySelector('video') as HTMLVideoElement;

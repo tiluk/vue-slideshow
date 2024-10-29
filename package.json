@@ -11,6 +11,7 @@
     "@display-studio/vue-player": "^0.0.6",
     "@mdi/font": "7.4.47",
     "roboto-fontface": "*",
+    "vite-plugin-static-copy": "^2.0.0",
     "vue": "^3.4.31",
     "vuetify": "^3.6.11"
   },

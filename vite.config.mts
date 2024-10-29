@@ -3,6 +3,7 @@ import Components from 'unplugin-vue-components/vite'
 import Vue from '@vitejs/plugin-vue'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import ViteFonts from 'unplugin-fonts/vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 // Utilities
 import { defineConfig } from 'vite'
@@ -24,6 +25,14 @@ export default defineConfig({
           styles: 'wght@100;300;400;500;700;900',
         }],
       },
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+        src: 'static-assets',
+        dest: '',
+        },
+      ],
     }),
   ],
   define: { 'process.env': {} },
