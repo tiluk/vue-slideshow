@@ -101,7 +101,7 @@ watch(activeSlide, () => {
         <v-carousel-item v-for="(slide, i) in slides" :key="i">
             <v-sheet class="fit-container">
                 <v-img :src="slide.src" class="fit-image" v-if="slide.type === `image`" />
-                <video :src="slide.src" class="fit-image" controls autoplay v-else-if="slide.type === `video`" />
+                <video :src="slide.src" class="fit-image" controls autoplay muted v-else-if="slide.type === `video`" />
             </v-sheet>
         </v-carousel-item>
     </v-carousel>
