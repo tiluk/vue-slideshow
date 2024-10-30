@@ -1,5 +1,5 @@
 {
-  "name": "vany-slideshow",
+  "name": "vue-slideshow",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
